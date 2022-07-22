@@ -1,0 +1,161 @@
+{
+  "users": [
+    {
+      "name": "Ziya",
+      "surname": "Karagoz",
+      "username": "ziyabey",
+      "birthday": "1999-01-01 00:00:00",
+      "education": "Bachelor",
+      "job": "Software Engineer",
+      "friendList": ["batubey", "enesbey"],
+      "pfp": "https://i.imgur.com/XQQXKQJ.jpg",
+      "online": true
+    },
+    {
+      "name": "Enes Bilal",
+      "surname": "Şeker",
+      "username": "enesbey",
+      "birthday": "1999-02-06 00:00:00",
+      "education": "Bachelor",
+      "job": "Computer Engineer",
+      "friendList": ["ziyabey", "batubey"],
+      "pfp": "https://i.imgur.com/XQQXKQJ.jpg",
+      "online": true
+    },
+    {
+      "name": "Batuhan",
+      "surname": "Acar",
+      "username": "batubey",
+      "birthday": "1998-07-03 00:00:00",
+      "education": "Bachelor",
+      "job": "Life Coach",
+      "friendList": ["ziyabey", "enesbey"],
+      "pfp": "https://i.imgur.com/XQQXKQJ.jpg",
+      "online": true
+    }
+  ],
+  "rooms": [
+    {
+      "id": 1,
+      "name": "Fizik Soru Odasi",
+      "maxUser": 5,
+      "education_level": {
+        "other": false,
+        "primary_school": false,
+        "high_school": true,
+        "university": true,
+        "post_graduate": false
+      },
+      "room_type": {
+        "text_chat": true,
+        "video_chat": false,
+        "audio_chat": false,
+        "whiteboard": false
+      },
+      "lesson": "Physics",
+      "topic": "Gravity",
+      "auth": {
+        "room_owner_id": "ziyabey",
+        "online_users": ["ziyabey", "batubey"]
+      },
+      "created_at": "2020-01-01 00:00:00"
+    },
+    {
+      "id": 2,
+      "name": "YKS Soru Odasi",
+      "maxUser": 3,
+      "education_level": {
+        "other": false,
+        "primary_school": false,
+        "high_school": true,
+        "university": false,
+        "post_graduate": false
+      },
+      "room_type": {
+        "text_chat": true,
+        "video_chat": true,
+        "audio_chat": true,
+        "whiteboard": false
+      },
+      "lesson": "Biyoloji",
+      "topic": "Bitkiler",
+      "auth": {
+        "room_owner_id": "enesbey",
+        "online_users": ["ziyabey", "enesbey"]
+      },
+      "created_at": "2022-03-05 00:00:00"
+    },
+    {
+      "id": 3,
+      "name": "Sanat Yapiyoruz",
+      "maxUser": 15,
+      "education_level": {
+        "other": true,
+        "primary_school": true,
+        "high_school": true,
+        "university": true,
+        "post_graduate": true
+      },
+      "room_type": {
+        "text_chat": true,
+        "video_chat": false,
+        "audio_chat": false,
+        "whiteboard": true
+      },
+      "lesson": "Fine Arts",
+      "topic": "Free Drawing",
+      "auth": {
+        "room_owner_id": "batubey",
+        "online_users": ["ziyabey", "enesbey", "batubey"]
+      },
+      "created_at": "2020-01-01 00:00:00"
+    },
+    {
+      "id": 4,
+      "name": "Bilgisayar Aglari Calisiyoruz",
+      "maxUser": 5,
+      "education_level": {
+        "other": false,
+        "primary_school": false,
+        "high_school": false,
+        "university": true,
+        "post_graduate": true
+      },
+      "room_type": {
+        "text_chat": true,
+        "video_chat": true,
+        "audio_chat": true,
+        "whiteboard": false
+      },
+      "lesson": "Bilgisayar Aglari",
+      "topic": "TCP/IP",
+      "auth": { "room_owner_id": "ziyabey", "online_users": ["ziyabey"] },
+      "created_at": "2020-01-01 00:00:00"
+    },
+    {
+      "id": 5,
+      "name": "Hayat Bilgisi",
+      "maxUser": 2,
+      "education_level": {
+        "other": false,
+        "primary_school": true,
+        "high_school": false,
+        "university": false,
+        "post_graduate": false
+      },
+      "room_type": {
+        "text_chat": true,
+        "video_chat": true,
+        "audio_chat": true,
+        "whiteboard": true
+      },
+      "lesson": "Hayat Bilgisi",
+      "topic": "Bakkala nasil gidilir",
+      "auth": {
+        "room_owner_id": "ziyabey",
+        "online_users": ["ziyabey", "enesbey"]
+      },
+      "created_at": "2020-01-01 00:00:00"
+    }
+  ]
+}
