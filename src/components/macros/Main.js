@@ -21,7 +21,7 @@ const Main = () => {
     return <div>Loading...</div>;
   }
   if (error) {
-    return <div>{error.message}</div>;
+    return <div>{error}</div>;
   }
   return (
     <div className='grid grid-cols-1 gap-5 lg:grid-cols-2'>
