@@ -5,7 +5,7 @@ import Button from "../micros/Button";
 
 const Header = () => {
   return (
-    <div className='flex p-5'>
+    <div className='flex p-5 bg-blue-600'>
       <NavLink to={""}>Main</NavLink>
       <NavLink to={"Session"}>Session</NavLink>
       <NavLink to={"Account"}>Account</NavLink>
