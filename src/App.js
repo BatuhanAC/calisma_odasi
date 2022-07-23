@@ -20,7 +20,8 @@ function App() {
         <Route path='Signup' element={<Signup />} />
         <Route path='Session' element={<Session />} />
       </Routes>
-      <ReactQueryDevtools initialIsOpen={false} position='bottom-right' />
+      {/** React Query Devtool */}
+      <ReactQueryDevtools initialIsOpen={false} position='top-right' />
     </QueryClientProvider>
   );
 }
