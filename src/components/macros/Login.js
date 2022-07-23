@@ -1,16 +1,57 @@
-import React from 'react'
-import Input from '../micros/Input'
+import React from "react";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as Yup from "yup";
+import { AiFillEye } from "react-icons/ai";
+import { FormikInputField } from "../micros/FormikInputField";
+const loginSchema = Yup.object().shape({
+  password: Yup.string()
+    .min(8, "Too Short!")
+    .max(50, "Too Long!")
+    .required("Required"),
+  email: Yup.string().email("Invalid email").required("Required"),
+});
 
 const Login = () => {
+  const handleSubmit = (values, { setSubmitting }) => {
+    setTimeout(() => {
+      alert(JSON.stringify(values, null, 2));
+      setSubmitting(false);
+    }, 400);
+  };
 
   return (
-    <>
-    <form className='flex flex-col w-[15%]'>
-      <Input placeholder='E-mail' type='email' />
-      <Input placeholder='Şifre' type='password' />
-    </form>
-    </>
-  )
-}
+    <div className='flex flex-col justify-center items-center m-10'>
+      <h1 className='font-bold text-lg text-blue-500'>Login</h1>
+      <Formik
+        initialValues={{ email: "", password: "" }}
+        validationSchema={loginSchema}
+        onSubmit={handleSubmit}
+      >
+        {({ isSubmitting }) => {
+          return (
+            <Form className='flex flex-col'>
+              <FormikInputField type='email' name='email'>
+                Email:
+              </FormikInputField>
+              <FormikInputField type='password' name='password'>
+                Password:
+              </FormikInputField>
 
-export default Login
+              <div className='flex justify-center items-center'>
+                <button
+                  className='bg-blue-400 mt-5 w-full rounded-lg p-2 py-3 text-white'
+                  type='submit'
+                  disabled={isSubmitting}
+                >
+                  Submit
+                </button>
+              </div>
+            </Form>
+          );
+        }}
+      </Formik>
+    </div>
+  );
+};
+
+export default Login;
