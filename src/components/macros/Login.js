@@ -1,7 +1,7 @@
 import React from "react";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik, Form} from "formik";
 import * as Yup from "yup";
-import { AiFillEye } from "react-icons/ai";
+import { useNavigate } from "react-router-dom";
 import { FormikInputField } from "../micros/FormikInputField";
 const loginSchema = Yup.object().shape({
   password: Yup.string()
@@ -12,6 +12,8 @@ const loginSchema = Yup.object().shape({
 });
 
 const Login = () => {
+  const navigate = useNavigate()
+
   const handleSubmit = (values, { setSubmitting }) => {
     setTimeout(() => {
       alert(JSON.stringify(values, null, 2));
@@ -50,6 +52,12 @@ const Login = () => {
           );
         }}
       </Formik>
+      <p>
+        Don't you have any account? {}
+        <button className="text-blue-500" onClick={() => navigate("/Signup")}>
+          SignUp
+        </button>
+      </p>
     </div>
   );
 };

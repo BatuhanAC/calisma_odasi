@@ -1,7 +1,6 @@
 import React from "react";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik, Form} from "formik";
 import * as Yup from "yup";
-import { AiFillEye } from "react-icons/ai";
 import { FormikInputField } from "../micros/FormikInputField";
 const loginSchema = Yup.object().shape({
   password: Yup.string()

@@ -1,8 +1,6 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 
 const Button = ({ children, handleOnClick }) => {
-  const navigate = useNavigate();
 
   return (
     <>

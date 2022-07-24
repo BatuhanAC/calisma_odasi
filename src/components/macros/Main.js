@@ -22,7 +22,7 @@ const Main = () => {
     return <div>{error}</div>;
   }
   return (
-    <div className='grid grid-cols-1 gap-5 lg:grid-cols-2'>
+    <div className='grid grid-cols-1 gap-5 lg:grid-cols-2 bg-slate-100'>
       {data.data.map((room) => (
         <RoomBox room={room} />
       ))}
