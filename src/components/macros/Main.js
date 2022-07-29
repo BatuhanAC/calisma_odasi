@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { RoomBox } from "../micros/RoomBox";
 import { useRoomsData } from "../../hooks/useRoomData";
-import axios from "axios";
+
 const Main = () => {
   const onSuccess = (data) => {
     console.log({ data });

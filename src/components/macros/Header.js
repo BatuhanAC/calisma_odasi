@@ -2,7 +2,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 
 const Header = () => {
-  const isLoged = true
+  const isLoged = false
 
   return (
     <div className='flex p-5 bg-blue-600 font-bold text-[#fff]'>
