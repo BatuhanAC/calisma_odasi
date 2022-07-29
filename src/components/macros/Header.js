@@ -9,9 +9,6 @@ const Header = () => {
       <NavLink className='mx-3 hover:text-[#d8d8d8]' to={""}>
         Main
       </NavLink>
-      <NavLink className='mx-3 hover:text-[#d8d8d8]' to={"Session"}>
-        Session
-      </NavLink>
       {
       isLoged ? 
       <>

@@ -1,6 +1,9 @@
 import React from "react";
 import { AiOutlineCheckCircle } from "react-icons/ai";
+import { useNavigate } from "react-router-dom";
+
 export const RoomBox = ({ room }) => {
+  const navigate = useNavigate()
   console.log("Oda", room);
   return (
     <div className=' w-auto p-6 m-5 bg-white rounded-xl shadow-xl hover:shadow-2xl hover:scale-105 transition-all transform duration-500'>
@@ -90,7 +93,9 @@ export const RoomBox = ({ room }) => {
           <p className='block text-xl font-semibold text-blue-400 cursor-auto hover:cursor-pointer hover:text-blue-700 transition duration-1000'>
             @{room?.auth?.room_owner_id}
           </p>
-          <button className='text-lg block font-semibold py-2 px-6 text-green-100 hover:text-white bg-blue-400 rounded-lg shadow hover:shadow-md transition duration-300'>
+          <button className='text-lg block font-semibold py-2 px-6 text-green-100 hover:text-white bg-blue-400 rounded-lg shadow hover:shadow-md transition duration-300'
+            onClick={() => navigate("Session", {state: {room}})}
+          >
             Giriş
           </button>
         </div>
