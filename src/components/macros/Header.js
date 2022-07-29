@@ -12,13 +12,13 @@ const Header = () => {
       {
       isLoged ? 
       <>
-        <NavLink className='mx-3 hover:text-[#d8d8d8]' to={"Account"}>
+        <NavLink className='mx-3 hover:text-[#d8d8d8]' to={"/account"}>
           Account
         </NavLink>
       </> 
       : 
       <>
-      <NavLink className='mx-3 hover:text-[#d8d8d8]' to={"Login"}>
+      <NavLink className='mx-3 hover:text-[#d8d8d8]' to={"/login"}>
         Login/SignUp
       </NavLink>
       </>

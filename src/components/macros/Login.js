@@ -54,7 +54,7 @@ const Login = () => {
       </Formik>
       <p>
         Don't you have any account? {}
-        <button className="text-blue-500" onClick={() => navigate("/Signup")}>
+        <button className="text-blue-500" onClick={() => navigate("/signup")}>
           SignUp
         </button>
       </p>

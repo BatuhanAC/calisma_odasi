@@ -94,7 +94,7 @@ export const RoomBox = ({ room }) => {
             @{room?.auth?.room_owner_id}
           </p>
           <button className='text-lg block font-semibold py-2 px-6 text-green-100 hover:text-white bg-blue-400 rounded-lg shadow hover:shadow-md transition duration-300'
-            onClick={() => navigate("Session", {state: {room}})}
+            onClick={() => navigate("/session", {state: {room}})}
           >
             Giriş
           </button>
