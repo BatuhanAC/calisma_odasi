@@ -11,7 +11,7 @@ const auth = createSlice({
     setUser: (state, action) => {
       state.user = action.payload
       if(action.payload) {
-        localStorage.setItem('isLoged', true)
+        localStorage.setItem('isLogged', true)
       }     
     }
   }

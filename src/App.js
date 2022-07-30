@@ -12,10 +12,10 @@ import { Toaster } from "react-hot-toast";
 function App() {
   const queryClient = new QueryClient();
   const location = useLocation()
-  if(localStorage.getItem('isLoged')) {
-
+  if(localStorage.getItem('isLogged')) {
+    //Gece gece kafam durdu
   } else {
-    localStorage.setItem('isLoged', false)
+    localStorage.setItem('isLogged', false)
   }
   
   return (

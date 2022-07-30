@@ -33,5 +33,5 @@ export const login = async(email, password) => {
 
 export const logout = async () => {
   await signOut(auth)
-  localStorage.setItem('isLoged', false)
+  localStorage.setItem('isLogged', false)
 }
