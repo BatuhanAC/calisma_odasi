@@ -25,7 +25,7 @@ const Login = () => {
 
 
   return (
-    <div className='flex flex-col justify-center items-center p-12 rounded-3xl mx-[25%] my-10 '>
+    <div className='flex flex-col justify-center items-center p-12 rounded-3xl mx-[25%] my-5 '>
       <div className='flex flex-row'>
         <button className={activeLogin ? "font-bold text-lg bg-blue-500 p-3 rounded-l-xl border-r text-white text-center cursor-default" :
          "font-bold text-lg bg-blue-300 p-3 rounded-l-xl border-r text-white text-center cursor-default"}
