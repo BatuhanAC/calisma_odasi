@@ -1,8 +1,8 @@
 import React, {useState} from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate} from "react-router-dom";
 import Button from "../micros/Button";
 import Input from "../micros/Input";
-
+import { login } from "../../firebase-config";
 
 
 const Login = () => {
@@ -15,12 +15,17 @@ const Login = () => {
 
   const navigate = useNavigate()
 
-  const handleLogin = () => {
+  const handleLogin = async e => {
+    e.preventDefault()
+    await login(email, password)
 
+    navigate('/', {
+      replace: true
+    })
   }
 
-  const handleSignUp = () => {
-
+  const handleSignUp = e => {
+    e.preventDefault()
   }
 
 
@@ -39,17 +44,17 @@ const Login = () => {
 
       </div>
       { activeLogin ? 
-      <form className="flex-col flex mt-8 gap-5 w-[30%]">
+      <form className="flex-col flex mt-8 gap-5 w-[30%]" onSubmit={handleLogin}>
         <Input type="email" placeholder="E-mail" setState={setEmail}/>
         <Input type="password" placeholder="Password" setState={setPassword}/>
-        <Button handleOnClick={handleLogin}>Login</Button>
+        <Button>Login</Button>
       </form>
       :
-      <form className="flex-col flex mt-8 gap-5 w-[30%]">
+      <form className="flex-col flex mt-8 gap-5 w-[30%]" onSubmit={handleSignUp}>
         <Input type="email" placeholder="E-mail" setState={setEmail}/>
         <Input type="password" placeholder="Password" setState={setPassword}/>
         <Input type="password" placeholder="Confirm Password" setState={setConfirmPassword}/>
-        <Button handleOnClick={handleSignUp}>SignUp</Button>
+        <Button>SignUp</Button>
       </form>
       }
     </div>

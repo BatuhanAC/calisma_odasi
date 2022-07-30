@@ -6,13 +6,22 @@ import Login from "./components/macros/Login";
 import Session from "./components/macros/Session";
 import { Route, Routes, useLocation } from "react-router-dom";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
-import PrivateRoute from "./components/routing/PrivateRoute";
+import PrivateRoute from "./components/controller/PrivateRoute";
+import { Toaster } from "react-hot-toast";
+
 function App() {
   const queryClient = new QueryClient();
   const location = useLocation()
+  if(localStorage.getItem('isLoged')) {
+
+  } else {
+    localStorage.setItem('isLoged', false)
+  }
+  
   return (
     <QueryClientProvider client={queryClient}>
-      <div className="bg-slate-100 h-screen justify-center items-center ce ">
+      <div className="bg-slate-100 h-screen justify-center items-center">
+      <Toaster position="top-right" />
       {location.pathname !== "/session" && <Header />}
       <Routes>
         <Route path='/' element={<Main />} auth={true} />
