@@ -5,7 +5,7 @@ const Button = ({ children, handleOnClick }) => {
   return (
     <>
       <button
-        className='bg-gray-400 m-5 rounded-lg p-2'
+        className='font-bold text-lg bg-blue-500 p-3 rounded-xl text-white text-center cursor-default self-center w-[50%]'
         onClick={handleOnClick}
       >
         {children}

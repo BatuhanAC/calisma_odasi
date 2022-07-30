@@ -3,7 +3,6 @@ import "./index.css";
 import Main from "./components/macros/Main";
 import Account from "./components/macros/Account";
 import Login from "./components/macros/Login";
-import Signup from "./components/macros/Signup";
 import Session from "./components/macros/Session";
 import { Route, Routes, useLocation } from "react-router-dom";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
@@ -13,13 +12,12 @@ function App() {
   const location = useLocation()
   return (
     <QueryClientProvider client={queryClient}>
-      <div className="bg-slate-100 h-screen">
+      <div className="bg-slate-100 h-screen justify-center items-center ce ">
       {location.pathname !== "/session" && <Header />}
       <Routes>
         <Route path='/' element={<Main />} auth={true} />
         <Route path='account' element={<PrivateRoute><Account/></PrivateRoute>} />
         <Route path='login' element={<Login />} />
-        <Route path='signup' element={<Signup />} />
         <Route path='session' element={<PrivateRoute><Session/></PrivateRoute>} />
       </Routes>
       </div>

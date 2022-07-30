@@ -1,63 +1,57 @@
-import React from "react";
-import { Formik, Form} from "formik";
-import * as Yup from "yup";
+import React, {useState} from "react";
 import { useNavigate } from "react-router-dom";
-import { FormikInputField } from "../micros/FormikInputField";
-const loginSchema = Yup.object().shape({
-  password: Yup.string()
-    .min(8, "Too Short!")
-    .max(50, "Too Long!")
-    .required("Required"),
-  email: Yup.string().email("Invalid email").required("Required"),
-});
+import Button from "../micros/Button";
+import Input from "../micros/Input";
+
+
 
 const Login = () => {
+  const [email, setEmail] = useState()
+  const [password, setPassword] = useState()
+  const [confirmPassword, setConfirmPassword] = useState()
+
+  const [activeLogin, setActiveLogin] = useState(true)
+  const [activeSignUp, setActiveSignUp] = useState(false)
+
   const navigate = useNavigate()
 
-  const handleSubmit = (values, { setSubmitting }) => {
-    setTimeout(() => {
-      alert(JSON.stringify(values, null, 2));
-      setSubmitting(false);
-    }, 400);
-  };
+  const handleLogin = () => {
+
+  }
+
+  const handleSignUp = () => {
+
+  }
+
 
   return (
-    <div className='flex flex-col justify-center items-center m-10'>
-      <h1 className='font-bold text-lg text-blue-500'>Login</h1>
-      <Formik
-        initialValues={{ email: "", password: "" }}
-        validationSchema={loginSchema}
-        onSubmit={handleSubmit}
-      >
-        {({ isSubmitting }) => {
-          return (
-            <Form className='flex flex-col'>
-              <FormikInputField type='email' name='email'>
-                Email:
-              </FormikInputField>
-              <FormikInputField type='password' name='password'>
-                Password:
-              </FormikInputField>
+    <div className='flex flex-col justify-center items-center p-12 rounded-3xl mx-[25%] my-10 '>
+      <div className='flex flex-row'>
+        <button className={activeLogin ? "font-bold text-lg bg-blue-500 p-3 rounded-l-xl border-r text-white text-center cursor-default" :
+         "font-bold text-lg bg-blue-300 p-3 rounded-l-xl border-r text-white text-center cursor-default"}
+          onClick={activeLogin ? "": () => {setActiveLogin(true); setActiveSignUp(false)}}
+        >Login</button>
 
-              <div className='flex justify-center items-center'>
-                <button
-                  className='bg-blue-400 mt-5 w-full rounded-lg p-2 py-3 text-white'
-                  type='submit'
-                  disabled={isSubmitting}
-                >
-                  Submit
-                </button>
-              </div>
-            </Form>
-          );
-        }}
-      </Formik>
-      <p>
-        Don't you have any account? {}
-        <button className="text-blue-500" onClick={() => navigate("/signup")}>
-          SignUp
-        </button>
-      </p>
+        <button className={activeSignUp ? "font-bold text-lg bg-blue-500 p-3 rounded-r-xl text-white text-center cursor-default" :
+         "font-bold text-lg bg-blue-300 p-3 rounded-r-xl text-white text-center cursor-default"}
+          onClick={activeSignUp ? "": () => {setActiveLogin(false); setActiveSignUp(true)}}
+        >SignUp</button>
+
+      </div>
+      { activeLogin ? 
+      <form className="flex-col flex mt-8 gap-5 w-[30%]">
+        <Input type="email" placeholder="E-mail" setState={setEmail}/>
+        <Input type="password" placeholder="Password" setState={setPassword}/>
+        <Button handleOnClick={handleLogin}>Login</Button>
+      </form>
+      :
+      <form className="flex-col flex mt-8 gap-5 w-[30%]">
+        <Input type="email" placeholder="E-mail" setState={setEmail}/>
+        <Input type="password" placeholder="Password" setState={setPassword}/>
+        <Input type="password" placeholder="Confirm Password" setState={setConfirmPassword}/>
+        <Button handleOnClick={handleSignUp}>SignUp</Button>
+      </form>
+      }
     </div>
   );
 };
