@@ -1,31 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { RoomBox } from "../micros/RoomBox";
-import { useRoomsData } from "../../hooks/useRoomData";
-
+import { storeRooms } from "../../firebase-config";
+import { useSelector } from "react-redux";
 const Main = () => {
-  const onSuccess = (data) => {
-    console.log({ data });
-  };
+  const { rooms } = useSelector((state) => state.rooms);
+  console.log(rooms);
 
-  const onError = (error) => {
-    console.log({ error });
-  };
-
-  const { isLoading, data, isError, error, refetch } = useRoomsData(
-    onSuccess,
-    onError
-  );
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-  if (isError) {
-    return <div>{error}</div>;
-  }
   return (
     <div className='grid grid-cols-1 gap-5 lg:grid-cols-2 bg-slate-100'>
-      {data.data.map((room) => (
-        <RoomBox room={room} />
-      ))}
+      <button onClick={() => storeRooms()}>Bas</button>
+      {rooms && rooms?.map((room) => <RoomBox room={room} />)}
     </div>
   );
 };
