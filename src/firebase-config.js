@@ -20,16 +20,25 @@ onAuthStateChanged(auth, user => {
   userControl(user || false)
 })
 
+export const signUp = async(email, password) => {
+  try {
+      await createUserWithEmailAndPassword(auth, email, password)
+  } catch (error) {
+    toast.error(error.code)
+  }
+}
+
+
+
+
 export const login = async(email, password) => {
   try {
      await signInWithEmailAndPassword(auth, email, password)
   } catch (error) {
-     toast.error(error.code)
+    toast.error(error.code)
   }
 
 }
-
-
 
 export const logout = async () => {
   await signOut(auth)
