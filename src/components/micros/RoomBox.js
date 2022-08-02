@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 
 export const RoomBox = ({ room }) => {
   const navigate = useNavigate();
-  console.log("Oda", room);
   return (
     <div className=' w-auto p-6 m-5 bg-white rounded-xl shadow-xl hover:shadow-2xl hover:scale-105 transition-all transform duration-500'>
       <div className='mt-4'>

@@ -9,7 +9,7 @@ import { Header2XL } from "../micros/Header2XL";
 import { Header4XL } from "../micros/Header4XL";
 import Input from "../micros/Input";
 import Option from "../micros/Option";
-
+import { fetchLessons } from "../../firebase-config";
 export const CreateRoom = () => {
   const animatedSelect = makeAnimated();
 

@@ -1,8 +1,22 @@
 import { initializeApp } from "firebase/app";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "firebase/auth";
-import {toast} from "react-hot-toast"
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  onAuthStateChanged,
+  signOut,
+} from "firebase/auth";
+import { toast } from "react-hot-toast";
 import { userControl } from "./components/controller/userControl";
-import {doc, setDoc, getFirestore, collection, getDocs, Timestamp, addDoc } from "firebase/firestore"
+import {
+  doc,
+  setDoc,
+  getFirestore,
+  collection,
+  getDocs,
+  Timestamp,
+  addDoc,
+} from "firebase/firestore";
 import store from "./store";
 import { setRooms } from "./store/rooms";
 
@@ -12,53 +26,49 @@ const firebaseConfig = {
   projectId: process.env.REACT_APP_projectId,
   storageBucket: process.env.REACT_APP_storageBucket,
   messagingSenderId: process.env.REACT_APP_messagingSenderId,
-  appId: process.env.REACT_APP_appId
+  appId: process.env.REACT_APP_appId,
 };
 
 const app = initializeApp(firebaseConfig);
-export const db = getFirestore(app)
+export const db = getFirestore(app);
 const auth = getAuth();
 
-onAuthStateChanged(auth, user => {
-  userControl(user.email || false)
-})
+onAuthStateChanged(auth, (user) => {
+  userControl(user.email || false);
+});
 
-
-export const signUp = async(email, password) => {
+export const signUp = async (email, password) => {
   try {
-      await createUserWithEmailAndPassword(auth, email, password)
-      await setDoc(doc(db, "users", email), {
-        name: "",
-        surname: "",
-        username: email,
-        birthday: "",
-        education: "",
-        job: "",
-        friendList: [],
-        pfp: "",
-        online: true,
-        password: password
-      })
+    await createUserWithEmailAndPassword(auth, email, password);
+    await setDoc(doc(db, "users", email), {
+      name: "",
+      surname: "",
+      username: email,
+      birthday: "",
+      education: "",
+      job: "",
+      friendList: [],
+      pfp: "",
+      online: true,
+      password: password,
+    });
   } catch (error) {
-    toast.error(error.code)
+    toast.error(error.code);
   }
-}
+};
 
-export const login = async(email, password) => {
+export const login = async (email, password) => {
   try {
-     await signInWithEmailAndPassword(auth, email, password)
+    await signInWithEmailAndPassword(auth, email, password);
   } catch (error) {
-    toast.error(error.code)
+    toast.error(error.code);
   }
-
-}
+};
 
 export const logout = async () => {
-  await signOut(auth)
-  localStorage.setItem('isLogged', false)
-
-}
-
+  await signOut(auth);
+  localStorage.setItem("isLogged", false);
+};
 
 export const storeRooms = async () => {
   let rooms = [];
@@ -67,6 +77,14 @@ export const storeRooms = async () => {
     rooms.push(doc.data());
   });
   store.dispatch(setRooms(rooms));
+};
+
+export const fetchLessons = async () => {
+  let lessons = [];
+  const querySnapshot = await getDocs(collection(db, "lessons"));
+  querySnapshot.forEach((doc) => {
+    lessons.push(doc.data());
+  });
 };
 
 export const addRoom = async (
