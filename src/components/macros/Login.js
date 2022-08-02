@@ -1,14 +1,15 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import { useNavigate} from "react-router-dom";
 import Button from "../micros/Button";
 import Input from "../micros/Input";
-import { login } from "../../firebase-config";
+import { login, signUp } from "../../firebase-config";
 
 
 const Login = () => {
   const [email, setEmail] = useState()
   const [password, setPassword] = useState()
   const [confirmPassword, setConfirmPassword] = useState()
+  const [equalPassword, setEqualPassword] = useState(false)
 
   const [activeLogin, setActiveLogin] = useState(true)
   const [activeSignUp, setActiveSignUp] = useState(false)
@@ -18,15 +19,31 @@ const Login = () => {
   const handleLogin = async e => {
     e.preventDefault()
     await login(email, password)
-
-    navigate('/', {
-      replace: true
-    })
+    if(localStorage.getItem("isLogged") !== "false") {
+      navigate('/')
+    }
   }
-
-  const handleSignUp = e => {
+  const handleSignUp = async e => {
     e.preventDefault()
+    await signUp(email, password)
+    if(localStorage.getItem("isLogged") !== "false") {
+      navigate('/')
+    }
   }
+
+  useEffect(() => {
+    if(password === confirmPassword && password && email) {
+      setEqualPassword(true)
+    }else {
+      setEqualPassword(false)
+    }
+  }, [confirmPassword, password, email])
+  
+  useEffect(() => {
+    if(localStorage.getItem("isLogged") !== "false") {
+      navigate('/')
+    }
+  }, [])
 
 
   return (
@@ -44,17 +61,17 @@ const Login = () => {
 
       </div>
       { activeLogin ? 
-      <form className="flex-col flex mt-8 gap-5 w-[30%]" onSubmit={handleLogin}>
+      <form className="flex-col flex mt-8 gap-5 w-[30%] min-w-[250px]" onSubmit={handleLogin}>
         <Input type="email" placeholder="E-mail" setState={setEmail}/>
         <Input type="password" placeholder="Password" setState={setPassword}/>
         <Button>Login</Button>
       </form>
       :
-      <form className="flex-col flex mt-8 gap-5 w-[30%]" onSubmit={handleSignUp}>
+      <form className="flex-col flex mt-8 gap-5 w-[30%] min-w-[250px]" onSubmit={handleSignUp}>
         <Input type="email" placeholder="E-mail" setState={setEmail}/>
         <Input type="password" placeholder="Password" setState={setPassword}/>
         <Input type="password" placeholder="Confirm Password" setState={setConfirmPassword}/>
-        <Button>SignUp</Button>
+        <Button disabled={!equalPassword}>SignUp</Button>
       </form>
       }
     </div>

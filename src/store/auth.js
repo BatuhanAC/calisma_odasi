@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   user: false,
+  isLogged: false
 }
 
 const auth = createSlice({
@@ -12,6 +13,7 @@ const auth = createSlice({
       state.user = action.payload
       if(action.payload) {
         localStorage.setItem('isLogged', true)
+        state.isLogged = true
       }     
     }
   }
