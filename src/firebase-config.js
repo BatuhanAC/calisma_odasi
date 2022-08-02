@@ -58,3 +58,34 @@ export const logout = async () => {
 
 }
 
+
+export const storeRooms = async () => {
+  let rooms = [];
+  const querySnapshot = await getDocs(collection(db, "rooms"));
+  querySnapshot.forEach((doc) => {
+    rooms.push(doc.data());
+  });
+  store.dispatch(setRooms(rooms));
+};
+
+export const addRoom = async (
+  name,
+  maxUser,
+  educationLevel,
+  roomType,
+  lesson,
+  topic,
+  auth
+) => {
+  const docRef = await addDoc(collection(db, "rooms"), {
+    name,
+    maxUser,
+    educationLevel,
+    roomType,
+    lesson,
+    topic,
+    auth,
+    createdAt: Timestamp.fromDate(new Date()),
+  });
+  console.log("Document written with ID: ", docRef.id, docRef);
+};
