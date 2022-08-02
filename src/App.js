@@ -8,11 +8,26 @@ import { Route, Routes, useLocation } from "react-router-dom";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import PrivateRoute from "./components/controller/PrivateRoute";
 import { Toaster } from "react-hot-toast";
+import { doc, onSnapshot } from "firebase/firestore";
+import {db} from "./firebase-config"
+import { useSelector } from 'react-redux';
+import { useEffect } from "react";
+import {accountControl} from "./components/controller/accountControl"
 
 function App() {
   const queryClient = new QueryClient();
   const location = useLocation()
-  
+  const user = useSelector(state => state.auth.user)
+
+  useEffect(() => {
+    const unsub = onSnapshot(doc(db, "users", `${user}`), (doc)=> {
+      accountControl(doc.data() || false)
+      
+    })
+
+    return() => {unsub()}
+  }, [user])
+
   if(localStorage.getItem('isLogged')) {
     //Gece gece kafam durdu
   } else {

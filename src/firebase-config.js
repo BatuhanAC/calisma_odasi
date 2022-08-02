@@ -2,7 +2,7 @@ import { initializeApp } from "firebase/app";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "firebase/auth";
 import {toast} from "react-hot-toast"
 import { userControl } from "./components/controller/userControl";
-import {doc, setDoc, getFirestore} from "firebase/firestore"
+import {doc, setDoc, getFirestore, getDoc} from "firebase/firestore"
 
 
 const firebaseConfig = {
