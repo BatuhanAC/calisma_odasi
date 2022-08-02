@@ -31,10 +31,30 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth();
-const db = getFirestore(app);
+export const db = getFirestore(app);
 onAuthStateChanged(auth, (user) => {
   userControl(user || false);
 });
+
+export const signUp = async (email, password) => {
+  try {
+    await createUserWithEmailAndPassword(auth, email, password);
+    await setDoc(doc(db, "users", email), {
+      name: "",
+      surname: "",
+      username: email,
+      birthday: "",
+      education: "",
+      job: "",
+      friendList: [],
+      pfp: "",
+      online: true,
+      password: password,
+    });
+  } catch (error) {
+    toast.error(error.code);
+  }
+};
 
 export const login = async (email, password) => {
   try {
