@@ -3,11 +3,10 @@ import Button from "../micros/Button";
 import Input from "../micros/Input";
 import Option from '../micros/Option';
 import Select from '../micros/Select';
-import { logout } from '../../firebase-config';
-import { useNavigate } from 'react-router-dom';
 import { db } from '../../firebase-config';
-import { doc, onSnapshot, updateDoc } from 'firebase/firestore';
+import { doc, updateDoc } from 'firebase/firestore';
 import { useSelector } from 'react-redux';
+import toast from 'react-hot-toast';
 
 const Account = () => {
   const [name, setName] = useState()
@@ -15,21 +14,21 @@ const Account = () => {
   const [username, setUsername] = useState()
   const [job, setJob] = useState()
   const [education, setEducation] = useState()
-  const [birthday, setBirthday] = useState(new Date())
-  const navigate = useNavigate()
+  const [birthday, setBirthday] = useState()
   const email = useSelector(state => state.auth.user)
   const data = useSelector(state => state.account.data)
 
   const save = async () => {
-    await updateDoc(doc(db, "users", `${email}`), {
-      name: name,
-      surname: surname,
-      username: username,
-      job: job,
-      education: education,
-      birthday: birthday
-    })
-  }
+      await updateDoc(doc(db, "users", `${email}`), {
+        name: name,
+        surname: surname,
+        username: username,
+        job: job,
+        education: education,
+        birthday: birthday
+      })
+      toast.success('Saved')
+    }
   
   useEffect(() => {
     setName(data.name)
@@ -39,13 +38,6 @@ const Account = () => {
     setEducation(data.education)
     setBirthday(data.birthday)
   }, [data])
-  
- 
-
-  // const SignOut = async () => {
-  //   await logout()
-  //   navigate("/", {replace: true})
-  // }
 
   return (
     <>
@@ -53,11 +45,11 @@ const Account = () => {
         <form className='grid grid-flow-row  w-[35%] grid-cols-2 justify-center p-[5%] gap-[12%] '>
           <div className='flex flex-col'>
             <label className='font-semibold'>Name:</label>
-            <Input placeholder={name} setState={setName} />
+            <Input placeholder={data.name} setState={setName} />
           </div>
           <div className='flex flex-col'>
             <label className='font-semibold'>Job:</label>
-            <Select setState={setJob} selected={job} >
+            <Select setState={setJob} selected={data.job} >
                 <Option value="">Choose...</Option>
                 <Option value="Computer Engineer">Computer Engineer</Option>
                 <Option value="Human Resources Manager">Human Resources Manager</Option>
@@ -68,11 +60,11 @@ const Account = () => {
           </div>
           <div className='flex flex-col'>
             <label className='font-semibold'>Surname:</label>
-            <Input placeholder={surname} setState={setSurname}/>
+            <Input placeholder={data.surname} setState={setSurname}/>
           </div>
           <div className='flex flex-col'>
           <label className='font-semibold'>Education:</label>
-            <Select setState={setEducation} selected={education}  >
+            <Select setState={setEducation} selected={data.education}  >
                 <Option value="">Choose...</Option>
                 <Option value="Elementary School">Elementary School</Option>
                 <Option value="High School">High School</Option>
@@ -83,7 +75,7 @@ const Account = () => {
           </div>
           <div className='flex flex-col'>
             <label className='font-semibold'>Username:</label>
-            <Input placeholder={username} setState={setUsername}/>
+            <Input placeholder={data.username} setState={setUsername}/>
           </div>
           <div className='flex flex-col'>
             <label className='font-semibold'>Birthday:</label>
@@ -91,7 +83,7 @@ const Account = () => {
           </div>
         </form>
         <div className='w-[15%] flex justify-center'>
-          <Button handleOnClick={save} >Kaydet</Button>
+          <Button handleOnClick={save} >Save</Button>
         </div>
       </div>
     </>

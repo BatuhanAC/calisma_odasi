@@ -23,7 +23,6 @@ function App() {
   useEffect(() => {
     const unsub = onSnapshot(doc(db, "users", `${user}`), (doc)=> {
       accountControl(doc.data() || false)
-      
     })
 
     return() => {unsub()}
@@ -38,7 +37,7 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <div className="bg-slate-100 h-screen justify-center items-center">
-      <Toaster position="top-right" />
+      <Toaster position="top-center" />
       {location.pathname !== "/session" && <Header />}
       <Routes>
         <Route path='/' element={<Main />} auth={true} />
