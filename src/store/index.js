@@ -1,11 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import auth from "./auth";
-import rooms from "./rooms";
+import account from "./account";
 const store = configureStore({
   reducer: {
     auth,
-    rooms,
-  },
-});
+    account
+  }
+})
 
-export default store;
+export default store
