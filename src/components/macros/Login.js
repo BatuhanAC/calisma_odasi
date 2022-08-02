@@ -61,13 +61,13 @@ const Login = () => {
 
       </div>
       { activeLogin ? 
-      <form className="flex-col flex mt-8 gap-5 w-[30%]" onSubmit={handleLogin}>
+      <form className="flex-col flex mt-8 gap-5 w-[30%] min-w-[250px]" onSubmit={handleLogin}>
         <Input type="email" placeholder="E-mail" setState={setEmail}/>
         <Input type="password" placeholder="Password" setState={setPassword}/>
         <Button>Login</Button>
       </form>
       :
-      <form className="flex-col flex mt-8 gap-5 w-[30%]" onSubmit={handleSignUp}>
+      <form className="flex-col flex mt-8 gap-5 w-[30%] min-w-[250px]" onSubmit={handleSignUp}>
         <Input type="email" placeholder="E-mail" setState={setEmail}/>
         <Input type="password" placeholder="Password" setState={setPassword}/>
         <Input type="password" placeholder="Confirm Password" setState={setConfirmPassword}/>
