@@ -3,7 +3,7 @@ import { RoomBox } from "../micros/RoomBox";
 import { storeRooms } from "../../firebase-config";
 import { useSelector } from "react-redux";
 const Main = () => {
-  const { rooms } = useSelector((state) => state.rooms);
+  const rooms  = useSelector((state) => state.rooms.rooms);
   console.log(rooms);
 
   return (
