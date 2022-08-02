@@ -2,8 +2,9 @@ import { initializeApp } from "firebase/app";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "firebase/auth";
 import {toast} from "react-hot-toast"
 import { userControl } from "./components/controller/userControl";
-import {doc, setDoc, getFirestore, getDoc} from "firebase/firestore"
-
+import {doc, setDoc, getFirestore, collection, getDocs, Timestamp, addDoc } from "firebase/firestore"
+import store from "./store";
+import { setRooms } from "./store/rooms";
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_apiKey,
