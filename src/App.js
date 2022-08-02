@@ -13,6 +13,7 @@ import {db} from "./firebase-config"
 import { useSelector } from 'react-redux';
 import { useEffect } from "react";
 import {accountControl} from "./components/controller/accountControl"
+import {CreateRoom} from "./components/macros/CreateRoom"
 
 function App() {
   const queryClient = new QueryClient();
@@ -44,6 +45,7 @@ function App() {
         <Route path='account' element={<PrivateRoute><Account/></PrivateRoute>} />
         <Route path='login' element={<Login />} />
         <Route path='session' element={<PrivateRoute><Session/></PrivateRoute>} />
+        <Route path='create-room' element={<CreateRoom />} />
       </Routes>
       </div>
       {/** React Query Devtool */}

@@ -13,7 +13,7 @@ const Header = () => {
       {isLogged === "true" ? (
         <>
           <NavLink className='mx-3 hover:text-[#d8d8d8]' to={"/account"}>
-            {user ? user.email : "Account"}
+            {user ? user : "Account"}
           </NavLink>
         </>
       ) : (
