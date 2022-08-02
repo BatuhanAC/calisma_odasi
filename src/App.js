@@ -45,7 +45,7 @@ function App() {
         <Route path='account' element={<PrivateRoute><Account/></PrivateRoute>} />
         <Route path='login' element={<Login />} />
         <Route path='session' element={<PrivateRoute><Session/></PrivateRoute>} />
-        <Route path='create-room' element={<CreateRoom />} />
+        <Route path='create-room' element={<PrivateRoute><CreateRoom /></PrivateRoute>} />
       </Routes>
       </div>
       {/** React Query Devtool */}
