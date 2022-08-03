@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { AiOutlineDownCircle } from "react-icons/ai";
 import { Link, Element } from "react-scroll";
 import Select from "react-select";
@@ -9,26 +9,38 @@ import { Header2XL } from "../micros/Header2XL";
 import { Header4XL } from "../micros/Header4XL";
 import Input from "../micros/Input";
 import Option from "../micros/Option";
-import { fetchLessons } from "../../firebase-config";
+import { fetchLessons, fetchTopics } from "../../firebase-config";
+import { collectionGroup } from "firebase/firestore";
 export const CreateRoom = () => {
   const animatedSelect = makeAnimated();
 
+  const selectTopicRef = useRef(null);
+
   const [name, setName] = useState(null);
-  const [lesson, setLesson] = useState(null);
-  const [topic, setTopic] = useState(null);
   const [educationLevel, setEducationLevel] = useState(null);
   const [maxUser, setMaxUser] = useState(null);
   const [roomType, setRoomType] = useState(null);
+  const [lesson, setLesson] = useState();
+  const [topic, setTopic] = useState();
+
+  const [lessonsList, setlessonsList] = useState();
+  const [topicsList, settopicsList] = useState();
 
   const [selectedEducationLevels, setSelectedEducationLevels] = useState("");
   const [selectedRooomTypes, setSelectedRooomTypes] = useState("");
 
   useEffect(() => {
-    console.log("DATAS: ", {
-      selectedEducationLevels,
-      selectedRooomTypes,
-    });
-  }, [selectedEducationLevels, selectedRooomTypes]);
+    fetchLessons()
+      .then((res) => {
+        setlessonsList(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+  useEffect(() => {
+    console.log({ lesson: lesson, topic: topic });
+  }, [topic, lesson]);
 
   return (
     <>
@@ -62,11 +74,35 @@ export const CreateRoom = () => {
           <Header4XL>Can you tell us</Header4XL>
           <div className='flex flex-col items-center'>
             <Header2XL>Lesson</Header2XL>
-            <Select placeholder='Choose a lesson...' />
+            <Select
+              placeholder='Choose a lesson...'
+              components={animatedSelect}
+              options={lessonsList}
+              onChange={(e) => {
+                selectTopicRef.current.focus();
+                selectTopicRef.current.clearValue();
+                setTopic(null);
+                setLesson(e.value);
+                fetchTopics(e.value).then((res) => {
+                  console.log(res);
+                  settopicsList(res.topics);
+                });
+              }}
+            />
           </div>
           <div className='flex flex-col items-center mb-4'>
             <Header2XL>Topic</Header2XL>
-            <Select placeholder='Choose a topic...' />
+            <Select
+              ref={selectTopicRef}
+              placeholder='Choose a topic...'
+              components={animatedSelect}
+              options={topicsList}
+              onChange={(e) => {
+                if (e != null) {
+                  setTopic(e.value);
+                }
+              }}
+            />
           </div>
         </div>
         <Link

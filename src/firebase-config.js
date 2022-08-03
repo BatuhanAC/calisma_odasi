@@ -16,6 +16,7 @@ import {
   getDocs,
   Timestamp,
   addDoc,
+  getDoc,
 } from "firebase/firestore";
 import store from "./store";
 import { setRooms } from "./store/rooms";
@@ -83,8 +84,18 @@ export const fetchLessons = async () => {
   let lessons = [];
   const querySnapshot = await getDocs(collection(db, "lessons"));
   querySnapshot.forEach((doc) => {
-    lessons.push(doc.data());
+    lessons.push({
+      value: doc.id,
+      label: doc.id.charAt(0).toUpperCase() + doc.id.slice(1),
+    });
   });
+  return lessons;
+};
+
+export const fetchTopics = async (lessonName) => {
+  const docRef = doc(db, "lessons", lessonName);
+  const docSnapShot = await getDoc(docRef);
+  return docSnapShot.data();
 };
 
 export const addRoom = async (
