@@ -1,10 +1,12 @@
 import React from "react";
 
-const Input = ({ placeholder, setState, type, children }) => {
+const Input = ({ placeholder, setState, type, children, min, max }) => {
   return (
     <input
       type={type}
       placeholder={placeholder}
+      min={min}
+      max={max}
       onChange={(e) => {
         setState(e.target.value);
       }}

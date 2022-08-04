@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { AiOutlineDownCircle } from "react-icons/ai";
-import { Link, Element } from "react-scroll";
+import { Link } from "react-scroll";
+import toast, { Toaster } from "react-hot-toast";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
 import { SubmitButon } from "../micros/SubmitButon";
@@ -8,26 +9,25 @@ import { educationLevels, roomTypes } from "../../utils/constants";
 import { Header2XL } from "../micros/Header2XL";
 import { Header4XL } from "../micros/Header4XL";
 import Input from "../micros/Input";
-import Option from "../micros/Option";
-import { fetchLessons, fetchTopics } from "../../firebase-config";
-import { collectionGroup } from "firebase/firestore";
+import { fetchLessons, fetchTopics, addRoom } from "../../firebase-config";
+import { useSelector } from "react-redux";
+import { Timestamp } from "firebase/firestore";
+
 export const CreateRoom = () => {
   const animatedSelect = makeAnimated();
 
   const selectTopicRef = useRef(null);
 
+  const username = useSelector((state) => state.account.data.username);
   const [name, setName] = useState(null);
-  const [educationLevel, setEducationLevel] = useState(null);
-  const [maxUser, setMaxUser] = useState(null);
-  const [roomType, setRoomType] = useState(null);
-  const [lesson, setLesson] = useState();
-  const [topic, setTopic] = useState();
+  const [maxUser, setMaxUser] = useState(0);
+  const [lesson, setLesson] = useState(null);
+  const [topic, setTopic] = useState(null);
+  const [selectedEducationLevels, setSelectedEducationLevels] = useState([]);
+  const [selectedRooomTypes, setSelectedRooomTypes] = useState([]);
 
   const [lessonsList, setlessonsList] = useState();
   const [topicsList, settopicsList] = useState();
-
-  const [selectedEducationLevels, setSelectedEducationLevels] = useState("");
-  const [selectedRooomTypes, setSelectedRooomTypes] = useState("");
 
   useEffect(() => {
     fetchLessons()
@@ -38,9 +38,20 @@ export const CreateRoom = () => {
         console.log(err);
       });
   }, []);
-  useEffect(() => {
-    console.log({ lesson: lesson, topic: topic });
-  }, [topic, lesson]);
+
+  const handleSubmit = (roomData) => {
+    addRoom(roomData)
+      .then((res) => {
+        toast.success("Room created successfully");
+        // Buradan sonra sayfayı yenile (Session Bolumu tamamlandiktan sonra oraya yonlendirilecektir)
+
+        window.location.reload();
+        window.scrollTo(0, 0);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <>
@@ -58,12 +69,16 @@ export const CreateRoom = () => {
               setState={setName}
             />
             <div className='mt-5'>
-              <Link name='name' to='lessonAndTopic' smooth spy offset={-400}>
-                <AiOutlineDownCircle
-                  size={70}
-                  className='text-blue-500 hover:text-blue-600 hover:cursor-pointer'
-                />
-              </Link>
+              {name == null || name == "" ? (
+                <div name='name'></div>
+              ) : (
+                <Link name='name' to='lessonAndTopic' smooth spy offset={-400}>
+                  <AiOutlineDownCircle
+                    size={70}
+                    className='text-blue-500 hover:text-blue-600 hover:cursor-pointer'
+                  />
+                </Link>
+              )}
             </div>
           </div>
         </div>
@@ -105,18 +120,22 @@ export const CreateRoom = () => {
             />
           </div>
         </div>
-        <Link
-          name='lessonAndTopic'
-          to='educationLevel'
-          smooth
-          spy
-          offset={-400}
-        >
-          <AiOutlineDownCircle
-            size={70}
-            className='text-blue-500 hover:text-blue-600 hover:cursor-pointer'
-          />
-        </Link>
+        {lesson == null || lesson == "" || topic == null || topic == "" ? (
+          <div name='lessonAndTopic'></div>
+        ) : (
+          <Link
+            name='lessonAndTopic'
+            to='educationLevel'
+            smooth
+            spy
+            offset={-400}
+          >
+            <AiOutlineDownCircle
+              size={70}
+              className='text-blue-500 hover:text-blue-600 hover:cursor-pointer'
+            />
+          </Link>
+        )}
       </div>
       {/** Getting Room Education Level */}
       <div className='w-full h-screen bg-slate-100 flex flex-col items-center pt-48'>
@@ -136,12 +155,17 @@ export const CreateRoom = () => {
               isMulti
             ></Select>
           </div>
-          <Link name='educationLevel' to='maxUser' smooth spy offset={-400}>
-            <AiOutlineDownCircle
-              size={70}
-              className='text-blue-500 hover:text-blue-600 hover:cursor-pointer'
-            />
-          </Link>
+          {selectedEducationLevels == null ||
+          selectedEducationLevels.length == 0 ? (
+            <div name='educationLevel'></div>
+          ) : (
+            <Link name='educationLevel' to='maxUser' smooth spy offset={-400}>
+              <AiOutlineDownCircle
+                size={70}
+                className='text-blue-500 hover:text-blue-600 hover:cursor-pointer'
+              />
+            </Link>
+          )}
         </div>
       </div>
       {/** Getting Room Max User */}
@@ -149,14 +173,26 @@ export const CreateRoom = () => {
         <div className='mb-4 flex flex-col items-center'>
           <Header4XL>Can you specify</Header4XL>
           <Header2XL>the maximum number of users in your room?</Header2XL>
-          <Input type={"number"} name='' id='' setState={setMaxUser} />
-        </div>{" "}
-        <Link name='maxUser' to='roomType' smooth spy offset={-400}>
-          <AiOutlineDownCircle
-            size={70}
-            className='text-blue-500 hover:text-blue-600 hover:cursor-pointer'
+          <Input
+            type={"number"}
+            name=''
+            id=''
+            setState={setMaxUser}
+            min='2'
+            max='25'
+            placeholder={"select a number between 2-25..."}
           />
-        </Link>
+        </div>{" "}
+        {maxUser == null || maxUser < 2 ? (
+          <div name='maxUser'></div>
+        ) : (
+          <Link name='maxUser' to='roomType' smooth spy offset={-400}>
+            <AiOutlineDownCircle
+              size={70}
+              className='text-blue-500 hover:text-blue-600 hover:cursor-pointer'
+            />
+          </Link>
+        )}
       </div>
       {/** Getting Room Type */}
       <div className='w-full h-screen bg-slate-100 flex flex-col items-center '>
@@ -177,9 +213,33 @@ export const CreateRoom = () => {
             />
           </div>
         </div>
-        <div name='roomType' className=' w-[20%] flex flex-col'>
-          <SubmitButon>Create Room</SubmitButon>
-        </div>
+        {selectedRooomTypes == null ||
+        selectedRooomTypes.length == 0 ||
+        !name ||
+        !lesson ||
+        !topic ||
+        !selectedEducationLevels ? (
+          <div name='roomType'></div>
+        ) : (
+          <div name='roomType' className=' w-[20%] flex flex-col'>
+            <SubmitButon
+              handleOnClick={() =>
+                handleSubmit({
+                  createdBy: username,
+                  name,
+                  maxUser: parseInt(maxUser),
+                  lesson,
+                  topic,
+                  selectedEducationLevels,
+                  selectedRooomTypes,
+                  createdAt: Timestamp.now(),
+                })
+              }
+            >
+              Create Room
+            </SubmitButon>
+          </div>
+        )}
       </div>
     </>
   );

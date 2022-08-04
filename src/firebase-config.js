@@ -18,8 +18,6 @@ import {
   addDoc,
   getDoc,
 } from "firebase/firestore";
-import store from "./store";
-import { setRooms } from "./store/rooms";
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_apiKey,
@@ -71,13 +69,14 @@ export const logout = async () => {
   localStorage.setItem("isLogged", false);
 };
 
-export const storeRooms = async () => {
+export const getAllRooms = async () => {
   let rooms = [];
-  const querySnapshot = await getDocs(collection(db, "rooms"));
-  querySnapshot.forEach((doc) => {
+  const colRef = collection(db, "rooms");
+  const docsSnap = await getDocs(colRef);
+  docsSnap.forEach((doc) => {
     rooms.push(doc.data());
   });
-  store.dispatch(setRooms(rooms));
+  return rooms;
 };
 
 export const fetchLessons = async () => {
@@ -98,24 +97,7 @@ export const fetchTopics = async (lessonName) => {
   return docSnapShot.data();
 };
 
-export const addRoom = async (
-  name,
-  maxUser,
-  educationLevel,
-  roomType,
-  lesson,
-  topic,
-  auth
-) => {
-  const docRef = await addDoc(collection(db, "rooms"), {
-    name,
-    maxUser,
-    educationLevel,
-    roomType,
-    lesson,
-    topic,
-    auth,
-    createdAt: Timestamp.fromDate(new Date()),
-  });
+export const addRoom = async (room) => {
+  const docRef = await addDoc(collection(db, "rooms"), room);
   console.log("Document written with ID: ", docRef.id, docRef);
 };

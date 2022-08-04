@@ -90,7 +90,7 @@ export const RoomBox = ({ room }) => {
         </div>
         <div className='mt-4 mb-2 flex justify-between pl-4 pr-2'>
           <p className='block text-xl font-semibold text-blue-400 cursor-auto hover:cursor-pointer hover:text-blue-700 transition duration-1000'>
-            @{room?.auth?.room_owner_id}
+            @{room?.createdBy}
           </p>
           <button
             className='text-lg block font-semibold py-2 px-6 text-green-100 hover:text-white bg-blue-400 rounded-lg shadow hover:shadow-md transition duration-300'
